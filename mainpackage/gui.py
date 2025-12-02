@@ -230,7 +230,7 @@ class SettingsFrame(ttk.Frame):
         # Play mode
         ttk.Label(box, text="Play Mode:").grid(
             row=0, column=0, sticky="w", pady=10)
-        ttk.Radiobutton(box, text="Vs AI", value="vs_ai",
+        ttk.Radiobutton(box, text="AI", value="vs_ai",
                         variable=app.play_mode).grid(row=0, column=1, sticky="w", padx=15)
         ttk.Radiobutton(box, text="PvP", value="pvp",
                         variable=app.play_mode).grid(row=0, column=2, sticky="w", padx=15)
