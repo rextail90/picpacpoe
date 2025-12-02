@@ -4,7 +4,7 @@ A simple Tic-Tac-Toe with GUI (Tkinter) and AI (minimax with alpha-beta–style 
 
 ## Requirements
 
-- Python **3.10+** (you’re using 3.13, which is fine)
+- Python **3.10+**
 - Tkinter
 
 ## How to Run the Game
