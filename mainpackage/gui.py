@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from .engine import GameState, opponent
 from .ai import best_ai_move
+from .settings_db import load_settings, save_settings
 
 
 class App(tk.Tk):
@@ -13,10 +14,12 @@ class App(tk.Tk):
 
         # game stuff
         self.state = GameState()
-        self.play_mode = tk.StringVar(value="vs_ai")   # "vs_ai" or "pvp"
-        self.ai_starts = tk.StringVar(value="player")  # "player" or "ai"
-        self.difficulty = tk.StringVar(value="easy")   # starts with easy mode
-        self.player_symbol = "X"                       # player symbol (X or O)
+
+        data = load_settings()
+        self.play_mode = tk.StringVar(value=data["play_mode"])      # "vs_ai" or "pvp"
+        self.ai_starts = tk.StringVar(value=data["ai_starts"])      # "player" or "ai"
+        self.difficulty = tk.StringVar(value=data["difficulty"])    # starts with easy mode
+        self.player_symbol = data["player_symbol"]                  # player symbol (X or O)
 
         # container for frames
         self.container = ttk.Frame(self)
@@ -272,7 +275,7 @@ class SettingsFrame(ttk.Frame):
         old_symbol = self.app.player_symbol
         new_symbol = self.playas_var.get()
 
-        # save new symbol
+        # save new symbol in app
         self.app.player_symbol = new_symbol
 
         # determine score reset conditions
@@ -283,6 +286,14 @@ class SettingsFrame(ttk.Frame):
             self.app.state.x_score = 0
             self.app.state.o_score = 0
             self.app.state.draws = 0
+
+        # save to database
+        save_settings(
+            play_mode=self.app.play_mode.get(),
+            ai_starts=self.app.ai_starts.get(),
+            difficulty=self.app.difficulty.get(),
+            player_symbol=self.app.player_symbol,
+        )
 
 
 def run():
